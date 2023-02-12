@@ -28,7 +28,7 @@ const ReactElement = function (
 export const jsx = (type, config, ...maybeChildren) => {
   let key: Key = null
   let ref: Ref = null
-  let props: Props = {}
+  const props: Props = {}
 
   for (const prop in config) {
     const val = config[prop]
