@@ -12,7 +12,7 @@
     "strict": true,
     "noImplicitAny": false,
     "skipLibCheck": true,
-    "isolatedModules": true,
+    "isolatedModules": false,
     "noEmit": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
