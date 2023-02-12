@@ -61,3 +61,5 @@ export const jsx = (type, config, ...maybeChildren) => {
 
   return ReactElement(type, key, ref, props)
 }
+
+export const jsxDev = jsx
