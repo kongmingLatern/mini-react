@@ -1,51 +1,75 @@
-import { FiberNode } from './fiber';
-import { completeWork } from './completeWork';
-import { beginWork } from './beginWork';
-let workInProgress: FiberNode | null = null;
+import {
+  FiberNode,
+  FiberRootNode,
+  createWorkInProcess,
+} from './fiber'
+import { completeWork } from './completeWork'
+import { beginWork } from './beginWork'
+import { HostRoot } from './workTag'
+let workInProgress: FiberNode | null = null
 
-function prepareFreshStack(fiber: FiberNode) {
-	workInProgress = fiber;
+function prepareFreshStack(root: FiberRootNode) {
+  workInProgress = createWorkInProcess(root.current, {})
 }
 
-function renderRoot(root: FiberNode) {
-	// 初始化
-	prepareFreshStack(root);
+function renderRoot(root: FiberRootNode) {
+  // 初始化
+  prepareFreshStack(root)
 
-	do {
-		try {
-			workLoop();
-			break;
-		} catch (e) {
-			console.warn('workLoop 发生错误', e);
-			workInProgress = null;
-		}
-	} while (true);
+  do {
+    try {
+      workLoop()
+      break
+    } catch (e) {
+      console.warn('workLoop 发生错误', e)
+      workInProgress = null
+    }
+  } while (true)
 }
+function scheduleUpdateOnFiber(fiber: FiberNode) {
+  // 调度功能
+  const root = markUpdateFromFiberToRoot(fiber)
+  renderRoot(root)
+}
+
+function markUpdateFromFiberToRoot(fiber: FiberNode) {
+  let node = fiber
+  let parent = node.return
+  while (parent !== null) {
+    node = parent
+    parent = node.return
+  }
+  if (node.tag === HostRoot) {
+    return node.stateNode
+  }
+  return null
+}
+
 function workLoop() {
-	while (workInProgress !== null) {
-		perforUnitOfWork(workInProgress);
-	}
+  while (workInProgress !== null) {
+    perforUnitOfWork(workInProgress)
+  }
 }
 function perforUnitOfWork(fiber: FiberNode) {
-	const next = beginWork(fiber);
-	fiber.memoizeProps = fiber.pendingProps;
-	if (next === null) {
-		completeUnitOfWork(fiber);
-	} else {
-		workInProgress = next;
-	}
+  const next = beginWork(fiber)
+  fiber.memoizeProps = fiber.pendingProps
+  if (next === null) {
+    completeUnitOfWork(fiber)
+  } else {
+    workInProgress = next
+  }
 }
 function completeUnitOfWork(fiber: FiberNode) {
-	let node: FiberNode | null = fiber;
+  let node: FiberNode | null = fiber
 
-	do {
-		completeWork(node);
-		const sibling = node.sibling;
-		if (sibling !== null) {
-			workInProgress = sibling;
-			return;
-		}
-		node = node.return;
-		workInProgress = node;
-	} while (node !== null);
+  do {
+    completeWork(node)
+    const sibling = node.sibling
+    if (sibling !== null) {
+      workInProgress = sibling
+      return
+    }
+    node = node.return
+    workInProgress = node
+  } while (node !== null)
 }

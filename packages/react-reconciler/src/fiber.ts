@@ -8,6 +8,7 @@ export class FiberNode {
   stateNode: any
   pendingProps: Props
   memoizeProps: Props
+  menoizeState: any
   type: any
   ref: Ref
   return: FiberNode | null
@@ -38,6 +39,7 @@ export class FiberNode {
     this.pendingProps = pendingProps
     // 工作之后的 props
     this.memoizeProps = null
+    this.menoizeState = null
     this.updateQueue = null
 
     this.ref = null
@@ -62,4 +64,33 @@ export class FiberRootNode {
     hostRootFiber.stateNode = this
     this.finishWork = null
   }
+}
+
+export const createWorkInProcess = (
+  current: FiberNode,
+  pendingProps: Props
+): FiberNode => {
+  let wip = current.alternate
+
+  if (wip === null) {
+    // mount
+    wip = new FiberNode(
+      current.tag,
+      pendingProps,
+      current.key
+    )
+    wip.stateNode = current.stateNode
+    wip.alternate = current
+    current.alternate = wip
+  } else {
+    // update
+    wip.pendingProps = pendingProps
+    wip.flags = NoFlags
+  }
+  wip.type = current.type
+  wip.updateQueue = current.updateQueue
+  wip.child = current.child
+  wip.memoizeProps = current.memoizeProps
+  wip.menoizeState = current.menoizeState
+  return wip
 }
