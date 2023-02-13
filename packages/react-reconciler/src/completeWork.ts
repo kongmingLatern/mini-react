@@ -1,2 +1,2 @@
-import { FiberNode } from './fiber'
-export const completeWork = (fiber: FiberNode) => {}
+import { FiberNode } from './fiber';
+export const completeWork = (fiber: FiberNode) => {};
