@@ -16,6 +16,7 @@ export class FiberNode {
   index: number
   alternate: FiberNode | null
   flags: Flags
+  updateQueue: unknown
   constructor(tag: WorkTag, pendingProps: Props, key: Key) {
     this.tag = tag
     this.key = key
@@ -37,6 +38,7 @@ export class FiberNode {
     this.pendingProps = pendingProps
     // 工作之后的 props
     this.memoizeProps = null
+    this.updateQueue = null
 
     this.ref = null
 
