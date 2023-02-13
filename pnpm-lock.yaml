@@ -36,6 +36,21 @@ importers:
       rollup-plugin-typescript2: 0.34.1_xswiuafr57fmdlvfpvse52fe3e
       typescript: 4.9.5
 
+  packages/react:
+    specifiers:
+      shared: workspace:*
+    dependencies:
+      shared: link:../shared
+
+  packages/react-reconciler:
+    specifiers:
+      shared: ''
+    dependencies:
+      shared: link:../shared
+
+  packages/shared:
+    specifiers: {}
+
 packages:
 
   /@babel/code-frame/7.18.6:
