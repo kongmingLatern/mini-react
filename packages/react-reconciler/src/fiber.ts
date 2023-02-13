@@ -1,4 +1,5 @@
 import { Props, Key, Ref } from 'shared/ReactTypes'
+import { Flags, NoFlags } from './fiberFlags'
 import { WorkTag } from './workTag'
 export class FiberNode {
   tag: WorkTag
@@ -7,11 +8,13 @@ export class FiberNode {
   pendingProps: Props
   memoizeProps: Props
   type: any
+  ref: Ref
   return: FiberNode | null
   sibling: FiberNode | null
   child: FiberNode | null
   index: number
-  ref: Ref
+  alternate: FiberNode | null
+  flags: Flags
   constructor(tag: WorkTag, pendingProps: Props, key: Key) {
     this.tag = tag
     this.key = key
@@ -35,5 +38,9 @@ export class FiberNode {
     this.memoizeProps = null
 
     this.ref = null
+
+    this.alternate = null
+
+    this.flags = NoFlags
   }
 }
