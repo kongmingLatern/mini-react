@@ -65,6 +65,10 @@ function commitPlacement(finishedWork: FiberNode) {
     // parent DOM
     const hostParent = getHostParent(finishedWork)
     // finishedWork ~~ DOM append parent DOM
+    appendPlacementNodeIntoContainer(
+      finishedWork,
+      hostParent
+    )
   }
 }
 
