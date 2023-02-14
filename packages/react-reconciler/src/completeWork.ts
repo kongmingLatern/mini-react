@@ -1,84 +1,97 @@
 import {
-	appendInitialChild,
-	createInstance,
-	createTextInstance
-} from './hostConfig';
-import { HostComponent, HostRoot, HostText } from './workTag';
-import { FiberNode } from './fiber';
-import { NoFlags } from './fiberFlags';
+  appendInitialChild,
+  Container,
+  createInstance,
+  createTextInstance,
+} from '../../react-dom/src/hostConfig'
+import {
+  HostComponent,
+  HostRoot,
+  HostText,
+} from './workTag'
+import { FiberNode } from './fiber'
+import { NoFlags } from './fiberFlags'
 export const completeWork = (wip: FiberNode) => {
-	const newProps = wip.pendingProps;
-	const current = wip.alternate;
+  const newProps = wip.pendingProps
+  const current = wip.alternate
 
-	switch (wip.tag) {
-		case HostComponent:
-			if (current && wip.stateNode) {
-				// update
-			} else {
-				// 构建DOM
-				const instance = createInstance(wip.type, newProps);
-				// 将 DOM 插入到 DOM树 中
-				appendAllChildren(instance, wip);
-				wip.stateNode = instance;
-			}
-			bubbleProperties(wip);
-			return null;
-		case HostText:
-			if (current && wip.stateNode) {
-				// update
-			} else {
-				// 构建DOM
-				const instance = createTextInstance(newProps.content);
-				wip.stateNode = instance;
-			}
-			bubbleProperties(wip);
-			return null;
-		case HostRoot:
-			bubbleProperties(wip);
-			return null;
+  switch (wip.tag) {
+    case HostComponent:
+      if (current && wip.stateNode) {
+        // update
+      } else {
+        // 构建DOM
+        const instance = createInstance(wip.type, newProps)
+        // 将 DOM 插入到 DOM树 中
+        appendAllChildren(instance, wip)
+        wip.stateNode = instance
+      }
+      bubbleProperties(wip)
+      return null
+    case HostText:
+      if (current && wip.stateNode) {
+        // update
+      } else {
+        // 构建DOM
+        const instance = createTextInstance(
+          newProps.content
+        )
+        wip.stateNode = instance
+      }
+      bubbleProperties(wip)
+      return null
+    case HostRoot:
+      bubbleProperties(wip)
+      return null
 
-		default:
-			if (__DEV__) {
-				console.warn('未处理的 completeWork');
-			}
-			break;
-	}
-	return null;
-};
+    default:
+      if (__DEV__) {
+        console.warn('未处理的 completeWork')
+      }
+      break
+  }
+  return null
+}
 
-function appendAllChildren(parent: FiberNode, wip: FiberNode) {
-	let node = wip.child;
-	while (node) {
-		if (node!.tag === HostComponent || node!.tag === HostText) {
-			appendInitialChild(parent, node?.stateNode);
-		} else if (node.child) {
-			node.child.return = node;
-			node = node.child;
-			continue;
-		}
-		if (node === wip) {
-			return;
-		}
-		while (node.sibling === null) {
-			if (node.return === null || node.return === wip) {
-				return;
-			}
-			node = node?.return;
-		}
-		node.sibling.return = node.return;
-		node = node.sibling;
-	}
+function appendAllChildren(
+  parent: Container,
+  wip: FiberNode
+) {
+  let node = wip.child
+  while (node) {
+    if (
+      node!.tag === HostComponent ||
+      node!.tag === HostText
+    ) {
+      appendInitialChild(parent, node?.stateNode)
+    } else if (node.child) {
+      node.child.return = node
+      node = node.child
+      continue
+    }
+    if (node === wip) {
+      return
+    }
+    while (node.sibling === null) {
+      if (node.return === null || node.return === wip) {
+        return
+      }
+      node = node?.return
+    }
+    node.sibling.return = node.return
+    node = node.sibling
+  }
 }
 
 function bubbleProperties(wip: FiberNode) {
-	let subtreeFlags = NoFlags;
-	let child = wip.child;
+  let subtreeFlags = NoFlags
+  let child = wip.child
 
-	while (child) {
-		subtreeFlags |= child.subtreeFlags;
-		subtreeFlags |= child.flags;
-		child.return = wip;
-		child = child.sibling;
-	}
-	wip.subtreeFlags |= subtreeFlags;
+  while (child) {
+    subtreeFlags |= child.subtreeFlags
+    subtreeFlags |= child.flags
+    child.return = wip
+    child = child.sibling
+  }
+  wip.subtreeFlags |= subtreeFlags
 }

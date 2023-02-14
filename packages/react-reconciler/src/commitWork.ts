@@ -12,7 +12,7 @@ import {
 import {
   appendChildToContainer,
   Container,
-} from 'hostConfig'
+} from 'react-dom/src/hostConfig'
 let nextEffect: FiberNode | null = null
 export const commitMutationEffects = (
   finishedWork: FiberNode
@@ -65,14 +65,16 @@ function commitPlacement(finishedWork: FiberNode) {
     // parent DOM
     const hostParent = getHostParent(finishedWork)
     // finishedWork ~~ DOM append parent DOM
-    appendPlacementNodeIntoContainer(
-      finishedWork,
-      hostParent
-    )
+    if (hostParent) {
+      appendPlacementNodeIntoContainer(
+        finishedWork,
+        hostParent
+      )
+    }
   }
 }
 
-function getHostParent(fiber: FiberNode) {
+function getHostParent(fiber: FiberNode): Container | null {
   let parent = fiber.return
 
   while (parent) {
@@ -88,6 +90,7 @@ function getHostParent(fiber: FiberNode) {
       console.warn('未处理的 getHostParent')
     }
   }
+  return null
 }
 function appendPlacementNodeIntoContainer(
   finishedWork: FiberNode,

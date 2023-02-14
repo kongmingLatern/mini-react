@@ -1,4 +1,4 @@
-import { Container } from 'hostConfig';
+import { Container } from 'react-dom/src/hostConfig';
 import { FiberNode, FiberRootNode } from './fiber';
 import { HostRoot } from './workTag';
 import {

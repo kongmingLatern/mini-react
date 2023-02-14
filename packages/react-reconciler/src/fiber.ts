@@ -1,7 +1,7 @@
 import { ReactElementType } from './../../shared/ReactTypes';
 import { Props, Key, Ref } from 'shared/ReactTypes';
 import { Flags, NoFlags } from './fiberFlags';
-import { Container } from 'hostConfig';
+import { Container } from 'react-dom/src/hostConfig';
 import { FunctionComponent, HostComponent, WorkTag } from './workTag';
 export class FiberNode {
 	tag: WorkTag;

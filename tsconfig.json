@@ -14,13 +14,13 @@
     "skipLibCheck": true,
     "isolatedModules": false,
     "noEmit": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
     "noImplicitReturns": true,
     "paths": {
-      "hostConfig": ["./react-reconciler/src/hostConfig.ts"]
+      "hostConfig": ["./react-dom/src/hostConfig.ts"]
     }
   },
-  "include": ["packages/**/src"],
+  "include": ["packages/**/src", "packages/react-dom/index.ts", "packages/react-dom/index.ts"],
   "exclude": ["node_modules", "packages/**/node_modules", "packages/**/dist"]
 }
