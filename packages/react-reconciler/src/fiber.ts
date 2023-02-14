@@ -57,12 +57,12 @@ export class FiberNode {
 export class FiberRootNode {
 	container: Container;
 	current: FiberNode;
-	finishWork: FiberNode | null;
+	finishWorked: FiberNode | null;
 	constructor(container: Container, hostRootFiber: FiberNode) {
 		this.container = container;
 		this.current = hostRootFiber;
 		hostRootFiber.stateNode = this;
-		this.finishWork = null;
+		this.finishWorked = null;
 	}
 }
 

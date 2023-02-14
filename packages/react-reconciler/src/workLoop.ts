@@ -1,3 +1,4 @@
+import { commitMutationEffects } from './commitWork'
 import { MutationMask, NoFlags } from './fiberFlags'
 import {
   FiberNode,
@@ -30,38 +31,38 @@ function renderRoot(root: FiberRootNode) {
   } while (true)
 
   const finishWork = root.current.alternate
-  root.finishWork = finishWork
+  root.finishWorked = finishWork
 
   // wip fiberNode 树 树中的flags
   commitRoot(root)
 }
 
 function commitRoot(root: FiberRootNode) {
-  const finishWork = root.finishWork
-  if (finishWork === null) {
+  const finishWorked = root.finishWorked
+  if (finishWorked === null) {
     return
   }
   if (__DEV__) {
-    console.warn('commit 阶段开始', finishWork)
+    console.warn('commit 阶段开始', finishWorked)
   }
   // 重置
-  root.finishWork = null
+  root.finishWorked = null
 
   // 判断是否存在 3 个子阶段需要执行的操作
-
   const subtreeHasEffect =
-    (finishWork.subtreeFlags & MutationMask) !== NoFlags
+    (finishWorked.subtreeFlags & MutationMask) !== NoFlags
 
   const rootHasEffect =
-    (finishWork.flags & MutationMask) !== NoFlags
+    (finishWorked.flags & MutationMask) !== NoFlags
 
   if (subtreeHasEffect || rootHasEffect) {
     // beforeMutation
     // mutation Placement
-    root.current = finishWork
+    commitMutationEffects(finishWorked)
+    root.current = finishWorked
     // layout
   } else {
-    root.current = finishWork
+    root.current = finishWorked
   }
 }
 
