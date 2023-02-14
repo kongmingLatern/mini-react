@@ -6,12 +6,12 @@ import {
 import { completeWork } from './completeWork'
 import { beginWork } from './beginWork'
 import { HostRoot } from './workTag'
+
 let workInProgress: FiberNode | null = null
 
 function prepareFreshStack(root: FiberRootNode) {
   workInProgress = createWorkInProcess(root.current, {})
 }
-
 function renderRoot(root: FiberRootNode) {
   // 初始化
   prepareFreshStack(root)
@@ -26,12 +26,11 @@ function renderRoot(root: FiberRootNode) {
     }
   } while (true)
 }
-function scheduleUpdateOnFiber(fiber: FiberNode) {
+export function scheduleUpdateOnFiber(fiber: FiberNode) {
   // 调度功能
   const root = markUpdateFromFiberToRoot(fiber)
   renderRoot(root)
 }
-
 function markUpdateFromFiberToRoot(fiber: FiberNode) {
   let node = fiber
   let parent = node.return
@@ -44,7 +43,6 @@ function markUpdateFromFiberToRoot(fiber: FiberNode) {
   }
   return null
 }
-
 function workLoop() {
   while (workInProgress !== null) {
     perforUnitOfWork(workInProgress)
