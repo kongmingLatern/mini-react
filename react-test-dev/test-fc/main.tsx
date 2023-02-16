@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 function App() {
+  console.log(1111)
   return (
     <div>
       <Child />

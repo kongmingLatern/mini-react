@@ -13,7 +13,7 @@ const pkgPath = resolvePkgPath(name)
 const pkgDistPath = resolvePkgPath(name, 'dist')
 
 export default [
-  // react
+  // react-dom
   {
     input: `${pkgPath}/${module}`,
     output: [
@@ -29,6 +29,7 @@ export default [
         format: 'umd',
       },
     ],
+    external: [...Object.keys(peerDependencies)],
     plugins: [
       ...getBaseRollupPlugins(),
       // webpack resolve alias

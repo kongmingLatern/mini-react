@@ -27,7 +27,6 @@ function renderRoot(root: FiberRootNode) {
 	} while (true);
 
 	const finishedWork = root.current.alternate;
-	root.finishedWork = finishedWork;
 
 	// wip fiberNode 树 树中的flags
 	commitRoot(root);
