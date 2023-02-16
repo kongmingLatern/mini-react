@@ -12,6 +12,7 @@ const distPath = path.resolve(
 )
 
 export function resolvePkgPath(pkgName, isDist) {
+  console.log(pkgName + ' isDist: ' + isDist)
   if (isDist) {
     return `${distPath}/${pkgName}`
   }

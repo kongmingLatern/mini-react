@@ -69,7 +69,10 @@ importers:
       shared: link:../shared
 
   packages/shared:
-    specifiers: {}
+    specifiers:
+      react: workspace:*
+    dependencies:
+      react: link:../react
 
 packages:
 

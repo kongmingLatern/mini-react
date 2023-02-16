@@ -9,7 +9,7 @@ export class FiberNode {
 	stateNode: any;
 	pendingProps: Props;
 	memoizedProps: Props;
-	menoizedState: any;
+	memoizedState: any;
 	type: any;
 	ref: Ref;
 	return: FiberNode | null;
@@ -41,7 +41,7 @@ export class FiberNode {
 		this.pendingProps = pendingProps;
 		// 工作之后的 props
 		this.memoizedProps = null;
-		this.menoizedState = null;
+		this.memoizedState = null;
 		this.updateQueue = null;
 
 		this.ref = null;
@@ -87,7 +87,7 @@ export const createWorkInProcess = (
 	wip.updateQueue = current.updateQueue;
 	wip.child = current.child;
 	wip.memoizedProps = current.memoizedProps;
-	wip.menoizedState = current.menoizedState;
+	wip.memoizedState = current.memoizedState;
 	return wip;
 };
 
