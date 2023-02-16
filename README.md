@@ -4,7 +4,7 @@
 
 This project will write React step by step, and then compare the source code of React.
 
-## 项目结构
+## Structure
 
 ```
 .
@@ -72,7 +72,7 @@ This project will write React step by step, and then compare the source code of 
 │       └── vite.config.js
 └── tsconfig.json
 
-
+```
 ## Schedule
 
 ### react module
@@ -93,4 +93,3 @@ This project will write React step by step, and then compare the source code of 
 - [x] commit 阶段完成
 - [x] Mutation 阶段完成
 - [x] ReactDOM.render 完成
-```
