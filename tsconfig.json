@@ -2,7 +2,7 @@
   "compileOnSave": true,
   "compilerOptions": {
     "baseUrl": "./packages",
-    "types": ["vitest/globals"],
+    "types": ["jest"],
     "target": "ESNext",
     "useDefineForClassFields": true,
     "module": "ESNext",
