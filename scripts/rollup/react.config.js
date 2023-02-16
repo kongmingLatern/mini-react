@@ -53,6 +53,18 @@ export default [
         format: 'umd',
       },
     ],
-    plugins: getBaseRollupPlugins(),
+    plugins: [
+      ...getBaseRollupPlugins(),
+      generatePackageJson({
+        inputFolder: pkgPath,
+        outputFolder: pkgDistPath,
+        baseContents: ({ name, description, version }) => ({
+          name,
+          description,
+          version,
+          main: 'index.js',
+        }),
+      }),
+    ],
   },
 ]

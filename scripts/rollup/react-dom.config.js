@@ -20,13 +20,13 @@ export default [
     output: [
       {
         file: `${pkgDistPath}/index.js`,
-        name: 'index.js',
+        name: 'ReactDOM',
         // 兼容 esm 和 cjs
         format: 'umd',
       },
       {
         file: `${pkgDistPath}/client.js`,
-        name: 'client.js',
+        name: 'client',
         format: 'umd',
       },
     ],
@@ -53,5 +53,18 @@ export default [
         }),
       }),
     ],
+  },
+  // test-utils
+  {
+    input: `${pkgPath}/test-utils.ts`,
+    output: [
+      {
+        file: `${pkgDistPath}/test-utils.js`,
+        name: 'testUtils',
+        format: 'umd',
+      },
+    ],
+    external: ['react-dom', 'react'],
+    plugins: getBaseRollupPlugins(),
   },
 ]
