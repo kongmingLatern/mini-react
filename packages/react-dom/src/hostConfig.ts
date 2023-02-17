@@ -1,4 +1,4 @@
-import { HostComponent } from './../../react-reconciler/src/workTag'
+import { HostText } from './../../react-reconciler/src/workTag'
 import { FiberNode } from './../../react-reconciler/src/fiber'
 export type Container = Element
 export type Instance = Element
@@ -32,7 +32,7 @@ export const appendChildToContainer = appendInitialChild
 
 export function commitUpdate(fiber: FiberNode) {
   switch (fiber.tag) {
-    case HostComponent: // HostComponent
+    case HostText: // HostComponent
       const text = fiber.memoizedProps.content
       return commitTextUpdate(fiber.stateNode, text)
 
