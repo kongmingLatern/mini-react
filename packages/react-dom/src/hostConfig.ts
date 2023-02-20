@@ -1,5 +1,6 @@
 import { HostText } from './../../react-reconciler/src/workTag'
 import { FiberNode } from './../../react-reconciler/src/fiber'
+import { updateFiberProps } from './SyntheticEvent'
 export type Container = Element
 export type Instance = Element
 export type TextInstance = Text
@@ -10,6 +11,8 @@ export const createInstance = (
 ): Instance => {
   // TODO: 处理 Props
   const element = document.createElement(type)
+	// 更新 props
+  updateFiberProps(element, props)
   return element
 }
 
